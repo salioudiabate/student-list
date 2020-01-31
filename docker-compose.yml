@@ -1,0 +1,26 @@
+version: '3'
+services:
+ website:
+  image: php:apache
+  environment:
+    USERNAME: toto
+    PASSWORD: python
+  volumes:
+   - ./website:/var/www/html
+  networks:
+   - student-api
+  ports:
+   - "80:80"
+  depends_on:
+   - api
+ api:
+  image: saliou-student-list
+  build: ./simple_api
+  volumes:
+   - ./simple_api/student_age.json:/data/student_age.json
+  ports:
+   - "5000:5000"
+  networks:
+   - student-api
+networks:
+ student-api:
